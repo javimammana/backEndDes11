@@ -10,23 +10,25 @@ class ProductController {
 
         try {
             if( !title || !description || !price || !code || !stock || !category ) {
+                req.logger.fatal("(CONTROLLER) - El producto esta incompleto, no se procesa")
                 throw CustomError.crearError({
                     nombre: "Producto Incompleto",
                     causa: infoErrorProducto({title, description, price, code, stock, category}),
                     mensaje: "Error al crear producto",
                     codigo: EErrors.TIPO_INVALIDO
-                })
+                });
             } 
 
             const prodCode = await productServices.getProductByCode({code: code});
 
             if (prodCode) {
+                req.logger.error("(CONTROLLER) - El codigo de producto ya existe, no puede repetirse");
                 throw CustomError.crearError({
                     nombre: "CODE existente",
                     causa: infoErrorCode(prodCode.code),
                     mensaje: "El codigo ingresado ya existe con otro producto",
                     codigo: EErrors.INFORMACION_REPETIDA
-                })
+                });
             }
 
             const newProduct = {
@@ -35,6 +37,7 @@ class ProductController {
             };
 
             const product = await productServices.createProduct(newProduct);
+            req.logger.info("(CONTROLLER) - El producto se creo con exito");
             res.json(product);
         } catch (error) {
             next(error);
@@ -42,10 +45,8 @@ class ProductController {
     }
 
     async getProducts (req, res) {
-        console.log("in Controller")
         try {
             const products = await productServices.getProducts();
-            console.log("out Controller")
             res.json(products)
             return;
         } catch (error) {
@@ -94,8 +95,10 @@ class ProductController {
         const { pid } = req.params;
         try {
             await productServices.deleteProduct(pid);
+            req.logger.info("(CONTROLLER) - El producto se elimino correctamente");
             res.json ({message: "Producto eliminado"});
         } catch (error) {
+            req.logger.error("(CONTROLLER) - Error al eliminar producto")
             res.status(500).json({error: error.message});
         }
     }
@@ -108,23 +111,25 @@ class ProductController {
             const product = await productServices.getProductById(pid);
 
             if (!product) {
+                req.logger.fatal("(CONTROLLER) - El producto no existe");
                 throw CustomError.crearError({
                     nombre: "Producto inexistente",
                     causa: infoErrorItem(pid),
                     mensaje: "El prodcuto no existe",
                     codigo: EErrors.ITEM_INVALIDO
-                })
+                });
             }
 
             const code = product.code
 
             if( !title || !description || !price || !code || !stock || !category ) {
+                req.logger.fatal("(CONTROLLER) - Datos de producto para actualizar incompletos");
                 throw CustomError.crearError({
                     nombre: "Producto Incompleto",
                     causa: infoErrorProducto({title, description, price, code, stock, category}),
                     mensaje: "Error al crear producto",
                     codigo: EErrors.TIPO_INVALIDO
-                })
+                });
             } 
 
             const updateProduct = {
@@ -134,8 +139,10 @@ class ProductController {
             };
 
             await productServices.updateProduct(pid, updateProduct);
+            req.logger.info("(CONTROLLER) - El producto de actualizo de manera exitosa")
             res.json(product);
         } catch (error) {
+            req.logger.error("(CONTROLLER) - Error al actualizar producto")
             next(error);
         }
     }
@@ -143,8 +150,10 @@ class ProductController {
     async deleteProductRealTime (data) {
         try {
             await productServices.deleteProduct(data);
+            req.logger.info("(CONTROLLER) - El producto se elimino desde el administrador")
         } catch (error) {
-            console.log(error)
+            //console.log(error)
+            req.logger.error("(CONTROLLER) - Error al eliminar producto desde Administrador de productos")
             throw new Error ("(CONTROLLER) Error al borrar productosRealTime");
         }
     }
@@ -154,7 +163,8 @@ class ProductController {
             const products = await productServices.getProducts();
             return products;
         } catch (error) {
-            console.log(error)
+            //console.log(error)
+            req.logger.error("(CONTROLLER) - Error al obtener productos en el administrador");
             throw new Error ("(CONTROLLER) Error al obtener productosRealTime");
         }
     }
@@ -162,10 +172,12 @@ class ProductController {
     async createProductRealTime (data) {
         try {
             const product = await productServices.createProduct(data);
-            console.log(product)
-            return product
+            //console.log(product)
+            req.logger.info("(CONTROLLER) - Se crea producto de manera exitosa desde el administrador")
+            return product;
         } catch (error) {
-            console.log(error)
+            //console.log(error)
+            req.logger.error("(CONTROLLER) - Error al crear producto desde Administrador")
             throw new Error ("(CONTROLLER) Error al crear productosRealTime");
         }
     }
@@ -188,9 +200,11 @@ class ProductController {
             }
 
             await productServices.updateProduct(id, nvoProd);
-            return "Producto Modificado"
+            req.logger.info("(CONTROLLER) - Se actualiza producto de manera exitosa desde Administrador");
+            return;
         } catch (error) {
-            console.log(error)
+            //console.log(error)
+            req.logger.error("(CONTROLLER) - Error al actualizar producto desde Administrador");
             throw new Error ("(CONTROLLER) Error al actualizar productosRealTime");
         }
     }

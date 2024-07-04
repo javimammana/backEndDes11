@@ -1,0 +1,46 @@
+http: GET en /register - 11:36:21 AM
+http: GET en / - 9:23:52 PM
+http: GET en /login - 9:23:54 PM
+http: POST en /api/sessions/login - 9:24:07 PM
+warning: (CRONTOLLER) - Usuario o contraseña incorrectos
+http: POST en /api/sessions/login - 9:24:30 PM
+warning: (CRONTOLLER) - Usuario o contraseña incorrectos
+http: POST en /api/sessions/login - 9:25:09 PM
+warning: (CRONTOLLER) - Usuario o contraseña incorrectos
+http: GET en /register - 9:27:30 PM
+http: POST en /api/users/register - 9:27:52 PM
+info: (CONTROLLER) - Se crea usuario de manera exitosa
+http: GET en /profile - 9:27:53 PM
+http: GET en /carts - 9:28:10 PM
+http: GET en /buys/tid - 9:28:12 PM
+http: GET en /products - 9:28:17 PM
+http: POST en /api/carts/6685ec88e4d567d0ed91d19c/product/6629079cfe7c4c7f21653f95 - 9:28:20 PM
+http: GET en /products - 9:28:20 PM
+http: GET en /carts - 9:28:27 PM
+http: PUT en /api/carts/6685ec88e4d567d0ed91d19c/product/6629079cfe7c4c7f21653f95 - 9:28:29 PM
+http: GET en /carts - 9:28:30 PM
+http: PUT en /api/carts/6685ec88e4d567d0ed91d19c/product/6629079cfe7c4c7f21653f95 - 9:28:31 PM
+http: GET en /carts - 9:28:31 PM
+http: PUT en /api/carts/6685ec88e4d567d0ed91d19c/product/6629079cfe7c4c7f21653f95 - 9:28:32 PM
+http: GET en /carts - 9:28:33 PM
+http: PUT en /api/carts/6685ec88e4d567d0ed91d19c/product/6629079cfe7c4c7f21653f95 - 9:28:34 PM
+http: GET en /carts - 9:28:34 PM
+http: GET en /products - 9:28:49 PM
+http: GET en /product/6629079cfe7c4c7f21653f95 - 9:28:51 PM
+http: POST en /api/carts/6685ec88e4d567d0ed91d19c/product/6629079cfe7c4c7f21653f95 - 9:28:53 PM
+http: GET en /products - 9:28:53 PM
+http: GET en /carts - 9:28:55 PM
+http: GET en /products - 9:29:10 PM
+http: POST en /api/carts/6685ec88e4d567d0ed91d19c/product/6629079cfe7c4c7f21653f92 - 9:29:11 PM
+http: GET en /products - 9:29:11 PM
+http: GET en /carts - 9:29:13 PM
+http: PUT en /api/carts/6685ec88e4d567d0ed91d19c/product/6629079cfe7c4c7f21653f92 - 9:29:15 PM
+http: GET en /carts - 9:29:16 PM
+http: PUT en /api/carts/6685ec88e4d567d0ed91d19c/product/6629079cfe7c4c7f21653f92 - 9:29:17 PM
+http: GET en /carts - 9:29:17 PM
+http: POST en /api/carts/6685ec88e4d567d0ed91d19c/purchase - 9:29:21 PM
+info: (CONTROLLER) - Compra procesada de manera correcta
+info: (CONTROLLER) - Se asocia ticket a cliente
+info: (CONTROLLER) - Se actualiza carrito del cliente
+http: GET en /carts/6685ece1e4d567d0ed91d201/checkout - 9:29:25 PM
+http: GET en /buys/tid - 9:29:32 PM

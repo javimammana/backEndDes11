@@ -11,8 +11,6 @@ import passport from "passport";
 import "./dataBase.js";
 import configObject from "./config/configEnv.js";
 
-// xnln qlld uvbj ktdc
-// import productRouter from "./routes/product.routes.js";
 import productRouter from "./routes/products.routes.js"
 import cartRouter from "./routes/carts.routes.js";
 import viewsRouter from "./routes/views.routes.js";
@@ -21,7 +19,8 @@ import initializePassport from "./config/passport.config.js";
 import userRouter from "./routes/users.routes.js";
 import manejadorError from "./middleware/error.js";
 
-// import ChatManager from "./manager/ChatManager.js";
+import addLogger from "./utils/logger.js";
+
 import ChatController from "./controllers/chats.controller.js";
 import ProductController from "./controllers/products.controler.js";
 const chatController = new ChatController();
@@ -67,6 +66,20 @@ app.engine("handlebars", exphbs.engine());
 app.set("view engine", "handlebars");
 app.set("views", "./src/views");
 
+//LOGER//
+app.use(addLogger);
+
+app.get("/loggertest", (req, res) => {
+    req.logger.debug("Mensaje DEBUG");  
+    req.logger.http("Mensaje HTTP"); 
+    req.logger.info("Mensaje INFO"); 
+    req.logger.warning("Mensaje WARNING"); 
+    req.logger.error("Mensaje ERROR"); 
+    req.logger.fatal("Mensaje FATAL"); 
+
+    res.send("Logs generados");
+})
+
 
  //Rutas
 app.use("/api/products", productRouter);
@@ -85,9 +98,6 @@ const httpServer = app.listen(PORT, () => console.log(`Server listening on port 
 
 //Socket
 const  io = new Server(httpServer);
-
-// import { ProductManager } from "./manager/ProductManager.js";
-// const manager = new ProductManager();
 
 io.on("connection", async (socket) => {
     console.log ("Un cliente se conecta a PROD");

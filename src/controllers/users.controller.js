@@ -40,6 +40,7 @@ class UserController {
         try {
             const exist = await userServices.getUserByEmail({email: email})
             if (exist) {
+                req.logger.warning("(CONTROLLER) - El correo ya esta registrado")
                 res.status(400).json("El correo ya esta registrado");
             }
             if (password !== repassword) {
@@ -57,6 +58,8 @@ class UserController {
                 chatid: ""
             }
             const user = await userServices.createUser(newUser);
+
+            req.logger.info("(CONTROLLER) - Se crea usuario de manera exitosa");
 
             const token = jwt.sign({
                 first_name: user.first_name,
@@ -77,6 +80,7 @@ class UserController {
             res.redirect("/profile");
 
         } catch (error) {
+            req.logger.error("(CONTROLLER) - Error al crear Usuario")
             res.status(500).json({error: error.message});
         }
     }
@@ -86,14 +90,17 @@ class UserController {
         try {
             const user = await userServices.getUserByEmail({email: email});
             if (!user) {
-                console.log ("Usuario no existe");
+                req.logger.error("(CRONTOLLER) - Usuario o contraseña incorrectos");
+                //console.log ("Usuario no existe");
                 return done(null, false);
             }
             if (!isValidPassword(password, user)) {
-                console.log("Contraseña incorrecta");
+                //console.log("Contraseña incorrecta");
+                req.logger.error("(CRONTOLLER) - Usuario o contraseña incorrectos");
                 return done(null, false);
             }
 
+            req.logger.info("(CONTROLLER) - Usuario Logueado OK");
             const token = jwt.sign({
                 first_name: user.first_name,
                 last_name: user.last_name,
@@ -119,9 +126,11 @@ class UserController {
 
     async logout (req, res) {
         try {
-            res.clearCookie("coderCookieToken")
-            res.redirect("/login")
+            res.clearCookie("coderCookieToken");
+            req.logger.info("(CONTROLLER) - Cierre de sesion exitoso");
+            res.redirect("/login");
         } catch (error) {
+            req.logger.error("(CONTROLLER) - Error al desloguar usuario");
             res.status(500).json({error: error.message});
         }
     }

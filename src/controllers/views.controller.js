@@ -95,8 +95,8 @@ class ViewController {
                 user
             });
         } catch (error) {
-            res.status(500).json({error: "Error del servicor al renderizar un Producto"});
-            console.log (error)
+            res.status(500).json({error: "Error del servicor al renderizar un Producto" + error});
+            //console.log (error)
         }
     }
 
@@ -136,7 +136,7 @@ class ViewController {
             });
 
         } catch (error) {
-            console.log(error)
+            //console.log(error)
             res.status(500).json({error: "Error del servidor al renderizar Carrito", error});
         }
     }
@@ -151,7 +151,7 @@ class ViewController {
                 user
             });
         } catch (error) {
-            res.status(500).json({error: "Error del servidor al Renderizar RealTimeProducts"});
+            res.status(500).json({error: "Error del servidor al Renderizar RealTimeProducts" + error});
         }
     }
 
@@ -170,8 +170,8 @@ class ViewController {
                 user
             });
         } catch (e) {
-            console.log(e);
-            res.status(500).json({error: "Error del servidor al Renderizar ChatRoom"});
+            //console.log(e);
+            res.status(500).json({error: "Error del servidor al Renderizar ChatRoom" + e});
         }
     }
 
@@ -182,7 +182,7 @@ class ViewController {
                 fileCss: "style.css"
             })
         } catch (error) {
-            res.status(500).json({error: "Error del servidor al Renderizar Login"});
+            res.status(500).json({error: "Error del servidor al Renderizar Login" + error});
         }
     }
 
@@ -193,7 +193,7 @@ class ViewController {
                 fileCss: "style.css"
             })
         } catch (error) {
-            res.status(500).json({error: "Error del servidor al Renderizar Register"});
+            res.status(500).json({error: "Error del servidor al Renderizar Register" + error});
         }
     }
 
@@ -207,7 +207,7 @@ class ViewController {
                 user
             })
         } catch (error) {
-            res.status(500).json({error: "Error del servidor al Renderizar Profile"});
+            res.status(500).json({error: "Error del servidor al Renderizar Profile" + error});
         }
     }
 
@@ -220,7 +220,7 @@ class ViewController {
                 user
             })
         } catch (error) {
-            res.status(500).json({error: "Error del servidor al Renderizar Restricted"});
+            res.status(500).json({error: "Error del servidor al Renderizar Restricted" + error});
         }
     }
 
@@ -240,7 +240,7 @@ class ViewController {
                     ...inBuy,
                     totalPrice: (inBuy.quantity * inBuy.price).toFixed(2),
                     }
-                return totalProd
+                return totalProd;
             })
 
             const buy = {
@@ -256,7 +256,7 @@ class ViewController {
                 user,
                 buy,
                 cart
-            })
+            });
 
         } catch (error) {
             res.status(500).json({error: "Error del servidor al Renderizar Compra" + error});
@@ -292,7 +292,7 @@ class ViewController {
                     purchasesId: buy.purchasesId,
                     code: buy.code
                 }
-                return buys
+                return buys;
             });
 
             let ticketSearch = tid == "tid" ? await ticketServices.getTicketById(findUser.purchases[0].purchasesId) : await ticketServices.getTicketById(tid);
@@ -310,8 +310,6 @@ class ViewController {
                 products: ticketTotalprice
             }
 
-            console.log(ticket)
-
             res.render("buys", {
                 title: `Mis compras`,
                 fileCss: "style.css",
@@ -320,7 +318,7 @@ class ViewController {
                 ticket
             })
         } catch (error) {
-            
+            res.status(500).json({error: "Error del servidor al Renderizar Panel de compras" + error});
         }
 
     }
