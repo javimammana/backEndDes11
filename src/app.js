@@ -69,7 +69,7 @@ app.set("views", "./src/views");
 //LOGER//
 app.use(addLogger);
 
-app.get("/loggertest", (req, res) => {
+app.get("/loggerTest", (req, res) => {
     req.logger.debug("Mensaje DEBUG");  
     req.logger.http("Mensaje HTTP"); 
     req.logger.info("Mensaje INFO"); 
